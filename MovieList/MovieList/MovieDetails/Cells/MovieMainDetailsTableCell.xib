@@ -11,27 +11,27 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="354" id="KGk-i7-Jjw" customClass="MovieMainDetailsTableCell" customModule="MovieList" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="591" height="354"/>
+            <rect key="frame" x="0.0" y="0.0" width="670" height="354"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="591" height="354"/>
+                <rect key="frame" x="0.0" y="0.0" width="670" height="354"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OKl-qA-UAq">
-                        <rect key="frame" x="16" y="134" width="100" height="200"/>
+                        <rect key="frame" x="16" y="73" width="100" height="200"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="OKl-qA-UAq" secondAttribute="height" multiplier="1:2" id="aRo-3O-FCU"/>
                             <constraint firstAttribute="width" constant="100" id="sIL-QC-ENM"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qnQ-BL-MEj">
-                        <rect key="frame" x="16" y="11" width="545" height="83"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The falcon and the winter soldier" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qnQ-BL-MEj">
+                        <rect key="frame" x="16" y="11" width="624" height="37"/>
                         <fontDescription key="fontDescription" type="system" pointSize="31"/>
                         <nil key="textColor"/>
                         <color key="highlightedColor" name="black"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hf6-hn-s1y">
-                        <rect key="frame" x="139" y="239" width="432" height="30"/>
+                        <rect key="frame" x="139" y="178" width="511" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="l3x-hW-pEi"/>
                         </constraints>
@@ -40,7 +40,7 @@
                         <color key="highlightedColor" name="black"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0W-iq-pfK">
-                        <rect key="frame" x="139" y="179" width="432" height="30"/>
+                        <rect key="frame" x="139" y="118" width="511" height="30"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="g48-C5-cDd"/>
                         </constraints>
@@ -49,18 +49,37 @@
                         <color key="highlightedColor" name="black"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qJ0-WA-sWW" customClass="AnimatorView" customModule="MovieList" customModuleProvider="target">
-                        <rect key="frame" x="16" y="134" width="100" height="200"/>
+                        <rect key="frame" x="16" y="73" width="100" height="200"/>
                         <color key="backgroundColor" red="0.88627450980392153" green="0.90588235294117647" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VHT-5W-zSY">
+                        <rect key="frame" x="16" y="73" width="100" height="200"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not Loaded" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TRy-MK-3hf">
+                                <rect key="frame" x="5.5" y="89.5" width="89" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <color key="highlightedColor" name="warning"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" name="black"/>
+                        <constraints>
+                            <constraint firstItem="TRy-MK-3hf" firstAttribute="centerX" secondItem="VHT-5W-zSY" secondAttribute="centerX" id="Ec9-BK-xio"/>
+                            <constraint firstItem="TRy-MK-3hf" firstAttribute="centerY" secondItem="VHT-5W-zSY" secondAttribute="centerY" id="abF-OG-Kah"/>
+                        </constraints>
                     </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="h0W-iq-pfK" firstAttribute="leading" secondItem="OKl-qA-UAq" secondAttribute="trailing" constant="23" id="1eP-ob-5NB"/>
+                    <constraint firstItem="VHT-5W-zSY" firstAttribute="top" secondItem="qJ0-WA-sWW" secondAttribute="top" id="1h4-uy-bA3"/>
                     <constraint firstItem="OKl-qA-UAq" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="4CQ-0w-fPU"/>
                     <constraint firstAttribute="trailing" secondItem="qnQ-BL-MEj" secondAttribute="trailing" constant="30" id="DNg-Ly-ydO"/>
-                    <constraint firstAttribute="bottom" secondItem="OKl-qA-UAq" secondAttribute="bottom" constant="20" id="Fup-D9-Lzo"/>
                     <constraint firstItem="qnQ-BL-MEj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Mq7-ge-OSN"/>
+                    <constraint firstItem="VHT-5W-zSY" firstAttribute="trailing" secondItem="qJ0-WA-sWW" secondAttribute="trailing" id="NXn-vK-JRP"/>
+                    <constraint firstItem="VHT-5W-zSY" firstAttribute="bottom" secondItem="qJ0-WA-sWW" secondAttribute="bottom" id="Npe-le-op5"/>
                     <constraint firstItem="qJ0-WA-sWW" firstAttribute="leading" secondItem="OKl-qA-UAq" secondAttribute="leading" id="OAW-92-7Cl"/>
-                    <constraint firstItem="OKl-qA-UAq" firstAttribute="top" secondItem="qnQ-BL-MEj" secondAttribute="bottom" constant="40" id="OPa-Gn-ggh"/>
+                    <constraint firstItem="OKl-qA-UAq" firstAttribute="top" secondItem="qnQ-BL-MEj" secondAttribute="bottom" constant="25" id="OPa-Gn-ggh"/>
+                    <constraint firstItem="VHT-5W-zSY" firstAttribute="leading" secondItem="qJ0-WA-sWW" secondAttribute="leading" id="Re5-KY-yVp"/>
                     <constraint firstItem="qnQ-BL-MEj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="UwD-lV-rlM"/>
                     <constraint firstItem="qJ0-WA-sWW" firstAttribute="top" secondItem="OKl-qA-UAq" secondAttribute="top" id="ZS5-UH-iSK"/>
                     <constraint firstItem="h0W-iq-pfK" firstAttribute="centerY" secondItem="OKl-qA-UAq" secondAttribute="centerY" constant="-40" id="bJw-QO-I7P"/>
@@ -76,18 +95,22 @@
                 <constraint firstItem="njF-e1-oar" firstAttribute="trailing" secondItem="hf6-hn-s1y" secondAttribute="trailing" constant="20" id="qiE-5f-hZT"/>
             </constraints>
             <connections>
+                <outlet property="errorView" destination="VHT-5W-zSY" id="e6d-4b-KBP"/>
                 <outlet property="movieImage" destination="OKl-qA-UAq" id="cdR-4d-HvJ"/>
                 <outlet property="movieTitle" destination="qnQ-BL-MEj" id="3Mg-Fm-M7W"/>
                 <outlet property="rate" destination="h0W-iq-pfK" id="97L-2w-mes"/>
                 <outlet property="raterCount" destination="hf6-hn-s1y" id="9PL-gp-yGC"/>
                 <outletCollection property="animators" destination="qJ0-WA-sWW" collectionClass="NSMutableArray" id="Al6-s4-u2M"/>
             </connections>
-            <point key="canvasLocation" x="150" y="99.776785714285708"/>
+            <point key="canvasLocation" x="207.24637681159422" y="99.776785714285708"/>
         </tableViewCell>
     </objects>
     <resources>
         <namedColor name="black">
             <color red="0.36100000143051147" green="0.36100000143051147" blue="0.36100000143051147" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="warning">
+            <color red="0.64548302664974622" green="0.05610442521650038" blue="0.086334197871266061" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
 </document>

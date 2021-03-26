@@ -34,15 +34,39 @@
                     </collectionView>
                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Hfa-hP-ykf">
                         <rect key="frame" x="197" y="0.0" width="123" height="28"/>
-                        <color key="pageIndicatorTintColor" name="black"/>
+                        <color key="pageIndicatorTintColor" systemColor="systemGray5Color"/>
+                        <color key="currentPageIndicatorTintColor" name="black"/>
+                        <connections>
+                            <action selector="pageControlSelectionAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="zsC-kF-HXI"/>
+                        </connections>
                     </pageControl>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gAd-8o-Vln">
+                        <rect key="frame" x="40" y="11" width="437" height="223"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not Loaded" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjX-Jn-Njz">
+                                <rect key="frame" x="174" y="101" width="89" height="21"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <color key="highlightedColor" name="black"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" name="white"/>
+                        <constraints>
+                            <constraint firstItem="yjX-Jn-Njz" firstAttribute="centerY" secondItem="gAd-8o-Vln" secondAttribute="centerY" id="exf-Nc-r2j"/>
+                            <constraint firstItem="yjX-Jn-Njz" firstAttribute="centerX" secondItem="gAd-8o-Vln" secondAttribute="centerX" id="qGe-L7-8yr"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="FbS-oy-WWz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="3Iw-Yv-6vW"/>
                     <constraint firstItem="FbS-oy-WWz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="20" id="3KW-8K-ons"/>
+                    <constraint firstItem="gAd-8o-Vln" firstAttribute="bottom" secondItem="FbS-oy-WWz" secondAttribute="bottom" id="7Gt-x9-mLh"/>
+                    <constraint firstItem="gAd-8o-Vln" firstAttribute="leading" secondItem="FbS-oy-WWz" secondAttribute="leading" id="AzJ-jI-F9w"/>
                     <constraint firstAttribute="bottomMargin" secondItem="FbS-oy-WWz" secondAttribute="bottom" constant="10" id="GsW-Kc-Ut6"/>
+                    <constraint firstItem="gAd-8o-Vln" firstAttribute="trailing" secondItem="FbS-oy-WWz" secondAttribute="trailing" id="NhS-BP-bAD"/>
                     <constraint firstItem="Hfa-hP-ykf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="SIm-gn-P2d"/>
                     <constraint firstAttribute="trailingMargin" secondItem="FbS-oy-WWz" secondAttribute="trailing" constant="20" id="Smd-kN-NF3"/>
+                    <constraint firstItem="gAd-8o-Vln" firstAttribute="top" secondItem="FbS-oy-WWz" secondAttribute="top" id="fyX-OE-5y1"/>
                     <constraint firstItem="Hfa-hP-ykf" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="g8O-9W-LMK"/>
                 </constraints>
             </tableViewCellContentView>
@@ -50,6 +74,7 @@
             <connections>
                 <outlet property="collectionView" destination="FbS-oy-WWz" id="ZH0-gv-26R"/>
                 <outlet property="dots" destination="Hfa-hP-ykf" id="7rr-V2-ooA"/>
+                <outlet property="errorView" destination="gAd-8o-Vln" id="Uqe-e2-r2G"/>
             </connections>
             <point key="canvasLocation" x="280.43478260869568" y="138.28125"/>
         </tableViewCell>
@@ -58,8 +83,14 @@
         <namedColor name="black">
             <color red="0.36100000143051147" green="0.36100000143051147" blue="0.36100000143051147" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
+        <namedColor name="white">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

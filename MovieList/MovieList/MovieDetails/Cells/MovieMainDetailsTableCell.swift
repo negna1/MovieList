@@ -13,12 +13,16 @@ class MovieMainDetailsTableCell: UITableViewCell , MovieListConfigurable {
     @IBOutlet weak var raterCount: UILabel!
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet var animators: [AnimatorView]!
+    @IBOutlet weak var errorView: UIView!
     
     func configure(with model: CellProtocol) {
         if let model = model as?  MovieDetailsCellModel {
+                movieImage.isHidden = model.errorHappend
+                errorView.isHidden = !model.errorHappend
             model.animate ? animate(model: model) : loadModel(model: model)
         }
     }
+
     
     func animate(model: MovieDetailsCellModel) {
         animators.forEach { (v) in

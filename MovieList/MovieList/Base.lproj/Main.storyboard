@@ -12,7 +12,7 @@
         <!--Movie List Controller-->
         <scene sceneID="b6L-lX-LXO">
             <objects>
-                <viewController id="6ms-67-BMn" customClass="MovieListController" customModule="MovieList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MovieListController" id="6ms-67-BMn" customClass="MovieListController" customModule="MovieList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="maR-WT-L6M">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

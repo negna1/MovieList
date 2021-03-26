@@ -12,18 +12,33 @@ class MovieListController: UIViewController , MovieListView{
     var moviePresenter: MovieListPresenter!
     @IBOutlet weak var tableView: UITableView!
     lazy var searchBar = UISearchBar(frame: .zero)
-    
+    private var needConfigure = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        styleSearchBar()
+        configurationIfNeeded()
+        setTableViewDataSourceAndDelegate()
+        moviePresenter.viewDidLoad()
+        
+    }
+    
+    func styleSearchBar() {
         searchBar.placeholder = "Search"
         navigationItem.titleView = searchBar
         searchBar.delegate = self
-        configureVc()
+    }
+    
+    func configurationIfNeeded() {
+        if needConfigure {
+            configureVc()
+            needConfigure = false
+        }
+    }
+
+    func setTableViewDataSourceAndDelegate() {
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        moviePresenter.viewDidLoad()
-        
     }
     
     func registerNibs(cells: [String]) {
@@ -37,13 +52,6 @@ class MovieListController: UIViewController , MovieListView{
     func configureVc() {
         let configurator = MovieListConfiguratorImpl()
         configurator.configure(vc: self)
-    }
-    
-    static func xibInstance() -> MovieListController {
-        let vc = MovieListController.init(nibName: "MovieListController", bundle: nil)
-        let configurator = MovieListConfiguratorImpl()
-        configurator.configure(vc: vc)
-        return vc
     }
     
 }
@@ -69,10 +77,6 @@ extension MovieListController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         moviePresenter.didSelectRow(at: indexPath)
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-       // moviePresenter.willDisplayRow(at: indexPath)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

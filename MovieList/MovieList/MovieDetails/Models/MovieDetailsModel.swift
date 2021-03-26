@@ -15,10 +15,13 @@ struct MovieDetailsCellModel: CellProtocol {
     let movieRating: String
     let raterCount: String
     let animate: Bool
+    let errorHappend: Bool
+    var isTappable: Bool {return !animate}
+    
 }
 
-
 struct MovieOverViewModel: CellProtocol {
+    var isTappable: Bool {return false}
     var nibIdentifier: String {return "MovieOverviewTableCell"}
     var height: CGFloat {return UITableView.automaticDimension}
     let overView: String
@@ -29,4 +32,7 @@ struct CollectionModel: CellProtocol {
     var height: CGFloat {return 200}
     var similarMovies: [CollectionCellProtocol]
     var animate: Bool
+    var delegate: CollectionGestureDelegate?
+    let errorHappend: Bool
+    var isTappable: Bool {return !animate}
 }

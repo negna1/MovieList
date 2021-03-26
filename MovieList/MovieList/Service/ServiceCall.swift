@@ -20,6 +20,10 @@ enum ErrorType {
     case notHaveData
 }
 
+/**
+**New API ADDing principes**
+.if i want another api call than i must add this case in ServiceMethods.
+ */
 enum ServiceMethods {
     case similarMoviesRequest(movieId: Int64 , pageNum: Int)
     case movieListRequest (pageNum: Int)
@@ -36,6 +40,10 @@ extension ServiceMethods {
     }
 }
 
+/**
+**MAIN SERVICE**
+ Its main service , also it has only two methods , thats why it dont need protocol.
+ */
 class Service : NSObject{
   
     func get<T: Decodable>(serviceMethod: ServiceMethods , respType: T.Type, withCompletion completion: @escaping (Status<Any>) -> Void)  {
@@ -64,5 +72,19 @@ class Service : NSObject{
                 } )
             task.resume()
     }
-
+    
+    
+    func getImages( url: URL? , withCompletion completion: @escaping ( Data?) -> Void ) {
+        guard let url = url else {return}
+        let lock = NSLock()
+        DispatchQueue.global().async {
+            if let data = try? Data(contentsOf: url){
+                completion(data)
+            }else{
+                completion(nil)
+            }
+        }
+        lock.unlock()
+    }
 }
+

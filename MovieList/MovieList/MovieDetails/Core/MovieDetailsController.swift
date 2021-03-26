@@ -15,11 +15,24 @@ class MovieDetailsController: UIViewController , MovieDetailsView{
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        registerNibs()
+        rightNavigationButton()
         self.detailPresenter.viewDidLoad()
-
+        
+    }
+    
+    func rightNavigationButton() {
+        let navItem = self.navigationItem
+        navItem.rightBarButtonItem = UIBarButtonItem.init(title: "HOME", style: .done, target: self, action: #selector(addTapped))
+        self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
     }
 
-    func registerNibs(cells: [String]) {
+    @objc func addTapped() {
+        detailPresenter.didTapHomePage()
+    }
+    
+    func registerNibs() {
+        let cells = MovieDetailsConstants.Cells
         cells.forEach({  self.tableView.register(UINib.init(nibName: $0, bundle: nil), forCellReuseIdentifier: $0)})
     }
     
@@ -52,9 +65,5 @@ extension MovieDetailsController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         detailPresenter.getHeightForRow(indexPath: indexPath)
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        detailPresenter.didSelectRow(at: indexPath)
     }
 }

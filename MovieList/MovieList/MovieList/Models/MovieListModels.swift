@@ -10,6 +10,7 @@ import UIKit
 protocol CellProtocol {
     var nibIdentifier: String {get}
     var height: CGFloat {get}
+    var isTappable: Bool {get}
 }
 
 protocol MovieListConfigurable: UITableViewCell {
@@ -23,4 +24,12 @@ struct MovieCellModel: CellProtocol {
     let movieName: String
     let movieRating: String
     let animate: Bool
+    var isTappable: Bool {return !animate}
+}
+
+struct ErrorCellModel: CellProtocol {
+    var isTappable: Bool {return false}
+    var nibIdentifier: String {return "ErrorViewCell"}
+    var height: CGFloat {return 100}
+    let errorText: String
 }

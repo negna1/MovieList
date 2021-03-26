@@ -7,41 +7,76 @@
 
 import UIKit
 
+protocol CollectionGestureDelegate {
+    func didTapIdex(at index: Int)
+}
+
+protocol DotChangeDelegate {
+    func dotChange(row: Int)
+}
 
 //There's only one cell type so i only register one cell. Also there are only cells  , not sections.
-class CollectionTableCell: UITableViewCell  , UICollectionViewDataSource , MovieListConfigurable{
+class CollectionTableCell: UITableViewCell  , UICollectionViewDataSource , MovieListConfigurable , DotChangeDelegate{
+   
     var collections: [MovieInfo] = []
-    var cellModels: [CollectionCellProtocol] = []
+    var cellModels: [CollectionCellProtocol] = [] {
+        didSet{
+            self.collectionView.reloadData()
+        }
+    }
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet var dots: UIPageControl!
+    @IBOutlet var errorView: UIView!
     var size: CGSize?
+    private  var gestureDelegate: CollectionGestureDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        styleUIForPageControl()
+        styleUIForView()
+        setFlowLayoutForCollectionView()
+        registerNibs()
+        setDelegateAndDatasource()
+    }
+    
+    func setDelegateAndDatasource() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+    }
+    
+    func styleUIForPageControl() {
         dots.pageIndicatorTintColor = .systemGray5
-        dots.currentPageIndicatorTintColor = .yellow
-        
-//        let lpgr : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
-//        lpgr.minimumPressDuration = 0.5
-//        lpgr.delegate = self
-//        lpgr.delaysTouchesBegan = true
-//        self.collectionView?.addGestureRecognizer(lpgr)
+    }
+    
+    func styleUIForView() {
         self.backgroundView?.backgroundColor = .clear
         self.backgroundColor = .clear
     }
     
+    func setFlowLayoutForCollectionView() {
+        let flowLayout = ZoomAndSnapFlowLayout()
+        flowLayout.dotdelegate = self
+        collectionView.collectionViewLayout = flowLayout
+    }
+    
+    func hideOrUnhideViews(model: CollectionModel ) {
+        errorView.isHidden = !model.errorHappend
+        collectionView.isHidden = model.errorHappend
+        if model.animate {
+            animationModels()
+        }
+    }
+    
+    func setValuesWithModel(with model: CollectionModel) {
+        cellModels = model.similarMovies
+        gestureDelegate = model.delegate
+        dots.numberOfPages = self.cellModels.count
+    }
+    
     func configure(with model: CellProtocol) {
         if let model = model as? CollectionModel {
-            registerNibs()
-            cellModels = model.similarMovies
-            dots.numberOfPages = self.cellModels.count
-            if model.animate {
-                animationModels() 
-            }
-            collectionView.delegate = self
-            collectionView.dataSource = self
-            collectionView.reloadData()
-            
+            setValuesWithModel(with: model)
+            hideOrUnhideViews(model: model)
         }
     }
     
@@ -57,15 +92,18 @@ class CollectionTableCell: UITableViewCell  , UICollectionViewDataSource , Movie
                 forCellWithReuseIdentifier: "MovieCollectionCell")
     }
     
-//    @objc func handleLongPress(gestureRecognizer : UILongPressGestureRecognizer){
-//        if (gestureRecognizer.state != UIGestureRecognizer.State.ended){
-//            return
-//        }
-//        let p = gestureRecognizer.location(in: self.collectionView)
-//        if let index = self.collectionView?.indexPathForItem(at: p) {
-//            gestureDelegate?.didLongTappedItem(at: index.row)
-//        }
-//    }
+    @IBAction func pageControlSelectionAction(_ sender: UIPageControl) {
+        let page: Int? = sender.currentPage
+        var frame: CGRect = self.collectionView.frame
+        frame.origin.x = frame.size.width * CGFloat(page ?? 0)
+        frame.origin.y = 0
+        self.collectionView.scrollRectToVisible(frame, animated: true)
+    }
+    
+    func dotChange(row: Int) {
+        dots.currentPage = row
+    }
+    
 }
 
 extension CollectionTableCell: UICollectionViewDelegate {
@@ -75,7 +113,8 @@ extension CollectionTableCell: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let model = cellModels[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionCell", for: indexPath) as? MovieCollectionConfigurable
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellModels[indexPath.row].nibIdentifier,
+                                                      for: indexPath) as? MovieCollectionConfigurable
         cell?.configure(with: model)
         return cell ?? UICollectionViewCell()
     }
@@ -88,38 +127,7 @@ extension CollectionTableCell: UICollectionViewDelegateFlowLayout {
         return model.size
     }
     
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        dots.currentPage = self.indexOfMajorCell(collectionView: collectionView)
-    }
-    
-    private func indexOfMajorCell(collectionView: UICollectionView) -> Int {
-        let itemWidth = cellModels.first?.size.width ?? 1
-           let proportionalOffset = collectionView.contentOffset.x / itemWidth
-        let index = Int(round(proportionalOffset))
-        let safeIndex = max(0, min(self.cellModels.count - 1, index))
-           return safeIndex
-    }
-
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let indexOfMajorCell = self.indexOfMajorCell(collectionView: collectionView)
-            let indexPath = IndexPath(row: indexOfMajorCell, section: 0)
-            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        
-        if indexOfMajorCell != 0 {
-            if let leftCell = self.collectionView.cellForItem(at: IndexPath.init(row: indexOfMajorCell - 1, section: 0)) as? MovieCollectionCell {
-                leftCell.transform = .identity
-            }
-        }
-        if indexOfMajorCell != self.collections.count - 1 {
-            if let leftCell = self.collectionView.cellForItem(at: IndexPath.init(row: indexOfMajorCell + 1, section: 0)) as? MovieCollectionCell {
-                leftCell.transform = .identity
-            }
-        }
-        let centerCell = self.collectionView.cellForItem(at: indexPath) as! MovieCollectionCell
-        collectionView.bringSubviewToFront(centerCell)
-        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 5, initialSpringVelocity: 0, options: [], animations: {
-            centerCell.transform = CGAffineTransform(scaleX: 1.3, y: 1.5)
-        })
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        gestureDelegate?.didTapIdex(at: indexPath.row)
     }
 }
