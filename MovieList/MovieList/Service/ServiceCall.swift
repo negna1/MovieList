@@ -20,9 +20,29 @@ enum ErrorType {
     case notHaveData
 }
 
+enum ServiceMethods {
+    case similarMoviesRequest(movieId: Int64 , pageNum: Int)
+    case movieListRequest (pageNum: Int)
+}
+
+extension ServiceMethods {
+    func getURL() -> URL?{
+        switch self {
+        case .similarMoviesRequest(let movieId , let pageNum):
+            return URL(string: "https://api.themoviedb.org/3/tv/\(movieId)/similar?api_key=9edc7678dc12632a2707d453bcb56e61&language=en-US&page=\(pageNum)")
+        case .movieListRequest(let pageNum):
+            return URL(string: "https://api.themoviedb.org/3/tv/popular?api_key=9edc7678dc12632a2707d453bcb56e61&language=en-US&page=\(pageNum)")
+        }
+    }
+}
+
 class Service : NSObject{
   
-    func get<T: Decodable>(_ url: URL, respType: T.Type, withCompletion completion: @escaping (Status<Any>) -> Void)  {
+    func get<T: Decodable>(serviceMethod: ServiceMethods , respType: T.Type, withCompletion completion: @escaping (Status<Any>) -> Void)  {
+        guard let url = serviceMethod.getURL() else {
+            completion(Status.fail(ErrorType.notHaveData))
+            return
+        }
         let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
              

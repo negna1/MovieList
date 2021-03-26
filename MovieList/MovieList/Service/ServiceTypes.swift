@@ -37,6 +37,7 @@ struct MovieInfo {
     var imageName: String
     var movieName: String
     var avarageRate: Double
+    var raterCount: Int
     var overview: String
 }
 
@@ -47,6 +48,7 @@ extension MoviePageResponse {
                                            imageName: $0.poster_path ?? "",
                                     movieName: $0.name ?? "",
                                     avarageRate: $0.vote_average ?? 0.0,
+                                    raterCount: $0.vote_count ?? 0,
                                     overview: $0.overview ?? "")})
     }
 }
@@ -54,5 +56,9 @@ extension MoviePageResponse {
 extension MovieInfo {
     func getMovieCellModel(image: UIImage?) -> MovieCellModel{
         MovieCellModel(image: image, movieName: self.movieName, movieRating: self.avarageRate.description, animate: false)
+    }
+    
+    func getCollectionCellModel(image: UIImage?) -> CollectionMovieCellModel {
+        CollectionMovieCellModel(image: image, movieName: self.movieName, movieRating: self.avarageRate.description, animate: false)
     }
 }

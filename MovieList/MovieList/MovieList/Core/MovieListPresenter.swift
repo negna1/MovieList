@@ -18,6 +18,7 @@ protocol MovieListPresenter {
     func willDisplayRow(at indexPath: IndexPath)
     func searchedWithText(text: String)
     func searchCanceled()
+    func reachedScroll()
 }
 
 protocol MovieListView : AnyObject{
@@ -67,8 +68,8 @@ class MovieListPresenterImpl: MovieListPresenter  {
     func getMoviePageWithList() {
         let net = Service.init()
         DispatchQueue.global(qos: .userInitiated).async{
-            guard let url = URL(string: "https://api.themoviedb.org/3/tv/popular?api_key=9edc7678dc12632a2707d453bcb56e61&language=en-US&page=" + self.lastPageNumber.description) else { return }
-        net.get(url, respType: MoviePageResponse.self) { (response : Status) in
+            net.get(serviceMethod: .movieListRequest(pageNum: self.lastPageNumber ),
+                    respType: MoviePageResponse.self) { (response : Status) in
             switch response{
             case let .success(movieList):
                 guard let movieList = movieList as? MoviePageResponse else{ return}
@@ -79,6 +80,7 @@ class MovieListPresenterImpl: MovieListPresenter  {
                 self.moviesWithoutFilter = self.movieInfo
                 self.fetchMoviePosters(currMovieInfo: currentMovieList)
                 self.imageDispatchGroup.notify(queue: .global()) {
+                    self.isLoading = false
                     self.fetchCellModels(lazyLoader: self.lastPageNumber > 2)
                 }
             case let  .fail(err):
@@ -121,7 +123,6 @@ class MovieListPresenterImpl: MovieListPresenter  {
     }
     
     func fetchCellModels(lazyLoader: Bool = false) {
-        self.isLoading = false
         self.cellModels = self.movieInfo.map({$0.getMovieCellModel(image: self.getImageFromDictionaryIfCan(id: $0.id))})
          self.reloadData()
  
@@ -142,7 +143,7 @@ extension MovieListPresenterImpl{
     }
     
     func didSelectRow(at indexPath: IndexPath) {
-        
+        router?.didTapMovie(movieInfo: movieInfo[indexPath.row])
     }
     
     func getHeightForRow(indexPath: IndexPath) -> CGFloat {
@@ -159,16 +160,25 @@ extension MovieListPresenterImpl{
             getMoviePageWithList()
         }
     }
+    
+    func reachedScroll() {
+        if !isLoading{
+            isLoading = true
+            getMoviePageWithList()
+        }
+    }
 }
 
 extension MovieListPresenterImpl{
     func searchedWithText(text: String) {
+        isLoading = !text.isEmpty
         movieInfo = text.isEmpty ? self.moviesWithoutFilter : moviesWithoutFilter.filter({$0.movieName.lowercased().contains(text.lowercased())})
         fetchCellModels()
     }
     
     func searchCanceled() {
         movieInfo = self.moviesWithoutFilter
+        isLoading = false
         fetchCellModels()
     }
 }

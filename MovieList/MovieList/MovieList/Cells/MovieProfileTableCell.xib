@@ -54,7 +54,7 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m9o-z3-VUB" customClass="AnimatorView" customModule="MovieList" customModuleProvider="target">
                                 <rect key="frame" x="90" y="142.5" width="422" height="112.5"/>
-                                <color key="backgroundColor" red="0.89042628879999997" green="0.90404074030000003" blue="0.92833194730000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.88627450980392153" green="0.90588235294117647" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -105,7 +105,7 @@
     </objects>
     <resources>
         <namedColor name="black">
-            <color red="0.36078431370000003" green="0.36078431370000003" blue="0.36078431370000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.36100000143051147" green="0.36100000143051147" blue="0.36100000143051147" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
 </document>

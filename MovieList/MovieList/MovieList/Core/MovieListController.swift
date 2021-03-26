@@ -72,7 +72,16 @@ extension MovieListController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        moviePresenter.willDisplayRow(at: indexPath)
+       // moviePresenter.willDisplayRow(at: indexPath)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let height = scrollView.frame.size.height
+        let contentYoffset = scrollView.contentOffset.y
+        let distanceFromBottom = scrollView.contentSize.height - contentYoffset
+        if distanceFromBottom < height {
+            moviePresenter.reachedScroll()
+        }
     }
 }
 
