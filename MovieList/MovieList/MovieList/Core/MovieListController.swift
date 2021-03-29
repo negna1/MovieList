@@ -55,8 +55,16 @@ class MovieListController: UIViewController , MovieListView{
     }
     
 }
-//I dont need section so not override it func.
+
+
 extension MovieListController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        moviePresenter.getHeightForRow(indexPath: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        moviePresenter.didSelectRow(at: indexPath)
+    }
     
 }
 
@@ -69,14 +77,6 @@ extension MovieListController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: moviePresenter.getNibName(indexPath: indexPath)) as? MovieListConfigurable else {return UITableViewCell()}
         moviePresenter.configureCell(cell: cell, indexPath: indexPath)
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        moviePresenter.getHeightForRow(indexPath: indexPath)
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        moviePresenter.didSelectRow(at: indexPath)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

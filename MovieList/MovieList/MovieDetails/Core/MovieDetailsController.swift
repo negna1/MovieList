@@ -49,7 +49,9 @@ class MovieDetailsController: UIViewController , MovieDetailsView{
 }
 
 extension MovieDetailsController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        detailPresenter.getHeightForRow(indexPath: indexPath)
+    }
 }
 
 extension MovieDetailsController: UITableViewDataSource {
@@ -61,9 +63,5 @@ extension MovieDetailsController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: detailPresenter.getNibName(indexPath: indexPath)) as? MovieListConfigurable else {return UITableViewCell()}
         detailPresenter.configureCell(cell: cell, indexPath: indexPath)
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        detailPresenter.getHeightForRow(indexPath: indexPath)
     }
 }
